@@ -3,6 +3,8 @@ const url = require('url')
 const fs = require('fs')
 const daysAndMonthsChecker = require('./dayandmonthchecker')
 
+const port = 8080
+
 http
 	.createServer(function (req, res) {
 		const params = url.parse(req.url, true).query
@@ -38,10 +40,6 @@ http
 			})
 		}
 		if (req.url.includes('/eliminar')) {
-			function espera(name) {
-				res.write(`Archivo ${name} eliminado con éxito`)
-				res.end()
-			}
 			fs.unlink(name, (err) => {
 				if (err) {
 					res.write(`el archivo ${name} no existe`)
@@ -53,20 +51,5 @@ http
 			})
 		}
 	})
-	.listen(8080, () => console.log('Escuchando el puerto 8080'))
-// if (req.url.includes('/eliminar')) {
-//    fs.unlink(name, (err, data) => {
-//       res.write(`Archivo ${name} eliminado con éxito`)
-//       res.end()
-//    })
-// }
+	.listen(port, () => console.log(`listening on port ${port}`))
 
-// fs.unlink(name, (err) => {
-//    if (err) {
-//       res.write(`el archivo ${name} no existe`)
-//       res.end()
-//    } else {
-//       res.write(`Archivo ${name} eliminado con éxito`)
-//       res.end()
-//    }
-// })
